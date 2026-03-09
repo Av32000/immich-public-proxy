@@ -8,7 +8,7 @@
     "singleItemAutoOpen": true,
     "downloadOriginalPhoto": true,
     "downloadedFilename": 0,
-    "allowDownloadAll": 0,
+    "allowDownloadAll": 1,
     "allowSlugLinks": true,
     "showHomePage": true,
     "showGalleryTitle": true,

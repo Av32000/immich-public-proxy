@@ -3,6 +3,8 @@
   --text-primary: #1f1f1f;
   --accent-color: #4250af;
   --surface-color: #f5f5f5;
+  --svg-filters: brightness(0) saturate(100%) invert(29%) sepia(12%)
+    saturate(5255%) hue-rotate(205deg) brightness(103%) contrast(90%);
   --border-radius: 12px;
   --thumb-gap: 8px;
   --transition: all 0.2s ease-in-out;
@@ -14,6 +16,8 @@
     --text-primary: #e5e7eb;
     --accent-color: #accbfa;
     --surface-color: #202124;
+    --svg-filters: brightness(0) saturate(100%) invert(88%) sepia(23%)
+      saturate(5133%) hue-rotate(185deg) brightness(109%) contrast(96%);
   }
 }
 
@@ -35,6 +39,11 @@ body {
   z-index: 10;
   background: var(--bg-color);
   border-bottom: 1px solid var(--surface-color);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #header h1 {
@@ -82,6 +91,11 @@ body {
   max-height: 250px;
   object-fit: cover;
   transition: opacity 0.3s ease;
+}
+
+.lg-outer .lg-thumb-item.active,
+.lg-outer .lg-thumb-item:hover {
+  border-color: var(--accent-color) !important;
 }
 
 @media (max-width: 800px) {
@@ -161,19 +175,21 @@ body {
 }
 
 #download-all {
-  background: var(--accent-color);
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 20px;
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
+  height: 24px;
 }
 
-#download-all:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+#download-all a {
+  height: 24px;
+}
+
+#download-all img {
+  filter: var(--svg-filters);
 }
 
 @keyframes rotation {
