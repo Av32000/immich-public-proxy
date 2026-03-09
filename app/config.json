@@ -2,7 +2,7 @@
   "ipp": {
     "responseHeaders": {
       "Cache-Control": "public, max-age=2592000",
-      "Access-Control-Allow-Origin":  "*"
+      "Access-Control-Allow-Origin": "*"
     },
     "singleImageGallery": false,
     "singleItemAutoOpen": true,
@@ -11,11 +11,8 @@
     "allowDownloadAll": 0,
     "allowSlugLinks": true,
     "showHomePage": true,
-    "showGalleryTitle": false,
-    "showGalleryDescription": false,
-    "showMetadata": {
-      "description": false
-    },
+    "showGalleryTitle": true,
+    "showGalleryDescription": true,
     "customInvalidResponse": false
   },
   "lightGallery": {

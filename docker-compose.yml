@@ -1,13 +1,12 @@
 services:
   immich-public-proxy:
-    image: alangrainger/immich-public-proxy:latest
+    build: .
     container_name: immich-public-proxy
     restart: always
     ports:
       - "3000:3000"
     environment:
-      PUBLIC_BASE_URL: https://your-proxy-url.com
-      IMMICH_URL: http://your-internal-immich-server:2283
+      IMMICH_URL: http://immich.homelab.local/
     healthcheck:
       test: curl -s http://localhost:3000/share/healthcheck -o /dev/null || exit 1
       start_period: 10s

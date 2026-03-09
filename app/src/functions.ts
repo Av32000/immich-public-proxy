@@ -1,18 +1,18 @@
-import dayjs from 'dayjs'
-import { Response } from 'express-serve-static-core'
-import { DownloadAll, SharedLink } from './types'
+import dayjs from "dayjs";
+import { Response } from "express-serve-static-core";
+import { DownloadAll, SharedLink } from "./types";
 
-let config = {}
+let config = {};
 try {
   if (process.env.CONFIG) {
     // Attempt to parse docker-compose config string into JSON (if specified)
-    config = JSON.parse(process.env.CONFIG)
+    config = JSON.parse(process.env.CONFIG);
   } else {
-    const configJson = require(process.env.IPP_CONFIG || '../config.json')
-    if (typeof configJson === 'object') config = configJson
+    const configJson = require(process.env.IPP_CONFIG || "../config.json");
+    if (typeof configJson === "object") config = configJson;
   }
 } catch (e) {
-  console.log(e)
+  console.log(e);
 }
 
 /**
@@ -25,55 +25,62 @@ try {
  * getConfigOption('ipp.singleImageGallery')
  */
 export const getConfigOption = (path: string, defaultOption?: unknown) => {
-  const value = path.split('.').reduce((obj: { [key: string]: unknown }, key) => (obj || {})[key], config)
+  const value = path
+    .split(".")
+    .reduce((obj: { [key: string]: unknown }, key) => (obj || {})[key], config);
   if (value === undefined) {
-    return defaultOption
+    return defaultOption;
   } else {
-    return value
+    return value;
   }
-}
+};
 
 /**
  * Output a console.log message with timestamp
  */
-export const log = (message: string) => console.log(dayjs().format() + ' ' + message)
+export const log = (message: string) =>
+  console.log(dayjs().format() + " " + message);
 
 /**
  * Force a value to be a string
  */
-export function toString (value: unknown) {
-  return typeof value === 'string' ? value : ''
+export function toString(value: unknown) {
+  return typeof value === "string" ? value : "";
 }
 
 /**
  * Add response headers from config.json
  */
-export function addResponseHeaders (res: Response) {
-  Object.entries(getConfigOption('ipp.responseHeaders', {}) as { [key: string]: string })
-    .forEach(([header, value]) => {
-      res.set(header, value)
-    })
+export function addResponseHeaders(res: Response) {
+  Object.entries(
+    getConfigOption("ipp.responseHeaders", {}) as { [key: string]: string },
+  ).forEach(([header, value]) => {
+    res.set(header, value);
+  });
 }
 
-export function canDownload (share: SharedLink) {
-  const allowDownloadConfig = getConfigOption('ipp.allowDownloadAll', 0) as DownloadAll
+export function canDownload(share: SharedLink) {
+  const allowDownloadConfig = getConfigOption(
+    "ipp.allowDownloadAll",
+    0,
+  ) as DownloadAll;
   if (!allowDownloadConfig) {
     // Downloading is disabled in config.json
-    return false
+    return false;
   } else if (allowDownloadConfig === DownloadAll.always) {
     // Always allowed to download in config.json
-    return true
+    return true;
   } else {
     // Return Immich's setting for this shared link
-    return !!share.allowDownload
+    return !!share.allowDownload;
   }
 }
 
-export function escapeHtml (str: string): string {
+export function escapeHtml(str: string): string {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

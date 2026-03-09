@@ -1,22 +1,50 @@
-import { Request } from 'express-serve-static-core'
+import { Request } from "express-serve-static-core";
 
 export enum AssetType {
-  image = 'IMAGE',
-  video = 'VIDEO'
+  image = "IMAGE",
+  video = "VIDEO",
 }
 
 export enum KeyType {
-  key = 'key',
-  slug = 'slug'
+  key = "key",
+  slug = "slug",
 }
-
+export const allowedExifKeys: (keyof ExifInfo)[] = [
+  "make",
+  "model",
+  "exifImageWidth",
+  "exifImageHeight",
+  "fileSizeInByte",
+  "dateTimeOriginal",
+  "timezone",
+  "lensModel",
+  "fNumber",
+  "focalLength",
+  "iso",
+  "exposureTime",
+  "rating",
+  "description",
+];
 export interface ExifInfo {
+  make?: string;
+  model?: string;
+  exifImageWidth?: number;
+  exifImageHeight?: number;
+  fileSizeInByte?: number;
+  dateTimeOriginal?: string;
+  timezone?: string;
+  lensModel?: string;
+  fNumber?: number;
+  focalLength?: number;
+  iso?: number;
+  exposureTime?: string;
+  rating?: number;
   description?: string;
 }
 
 export enum AlbumType {
-  album = 'ALBUM',
-  individual = 'INDIVIDUAL'
+  album = "ALBUM",
+  individual = "INDIVIDUAL",
 }
 
 export interface Asset {
@@ -50,8 +78,9 @@ export interface SharedLink {
     albumName?: string;
     order?: string;
     description?: string;
-  }
+  };
   expiresAt: string | null;
+  showMetadata?: boolean;
 }
 
 export interface SharedLinkResult {
@@ -62,9 +91,9 @@ export interface SharedLinkResult {
 }
 
 export enum ImageSize {
-  thumbnail = 'thumbnail',
-  preview = 'preview',
-  original = 'original'
+  thumbnail = "thumbnail",
+  preview = "preview",
+  original = "original",
 }
 
 export interface IncomingShareRequest {
@@ -80,5 +109,5 @@ export interface IncomingShareRequest {
 export enum DownloadAll {
   disabled,
   perImmich,
-  always
+  always,
 }

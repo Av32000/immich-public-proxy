@@ -27,16 +27,16 @@
  * @return {String}         Sanitized filename
  */
 
-const illegalRe = /[/?<>\\:*|"]/g
+const illegalRe = /[/?<>\\:*|"]/g;
 // eslint-disable-next-line no-control-regex
-const controlRe = /[\x00-\x1f\x80-\x9f]/g
-const reservedRe = /^\.+$/
-const windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i
-const windowsTrailingRe = /[. ]+$/
+const controlRe = /[\x00-\x1f\x80-\x9f]/g;
+const reservedRe = /^\.+$/;
+const windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
+const windowsTrailingRe = /[. ]+$/;
 
-export function sanitize (input, replacement = '') {
-  if (typeof input !== 'string') {
-    throw new Error('Input must be string')
+export function sanitize(input, replacement = "") {
+  if (typeof input !== "string") {
+    throw new Error("Input must be string");
   }
   return input
     .replace(illegalRe, replacement)
@@ -44,5 +44,5 @@ export function sanitize (input, replacement = '') {
     .replace(reservedRe, replacement)
     .replace(windowsReservedRe, replacement)
     .replace(windowsTrailingRe, replacement)
-    .slice(0, 254)
+    .slice(0, 254);
 }
