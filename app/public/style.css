@@ -1,118 +1,186 @@
-html {
-    background: #191919;
+:root {
+  --bg-color: #ffffff;
+  --text-primary: #1f1f1f;
+  --accent-color: #4250af;
+  --surface-color: #f5f5f5;
+  --border-radius: 12px;
+  --thumb-gap: 8px;
+  --transition: all 0.2s ease-in-out;
 }
 
-#lightgallery a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #111111;
+    --text-primary: #e5e7eb;
+    --accent-color: #accbfa;
+    --surface-color: #202124;
+  }
 }
 
-#lightgallery img {
-    max-height: 250px;
-    margin: 4px;
-}
-
-@media (max-width: 800px) {
-    #lightgallery a {
-        width: calc(100vw / 3 - 10px);
-        height: calc(100vw / 3 - 10px);
-        overflow: hidden;
-    }
-
-    #lightgallery img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-}
-@media (min-width: 801px) {
-    #lightgallery a.thumb-error {
-        width: 250px;
-        height: 250px;
-        margin: 4px;
-    }
-}
-
-#lightgallery a.thumb-error {
-    background: #2a2a2a;
-}
-#lightgallery a.thumb-error img {
-    display: none;
-}
-
-.play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background-image: url('/share/static/images/play.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-}
-
-#lightgallery a:has(.play-icon):hover .play-icon {
-    opacity: 1;
-}
-
-#password {
-    color: white;
-}
-
-#header, #album-description {
-    font-family: system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif;
-    color: white;
+html,
+body {
+  background: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  font-family: "Google Sans", Roboto, system-ui, sans-serif;
+  transition: background-color 0.3s ease;
 }
 
 #header {
-    width: 100%;
-    display: flex;
+  padding: 16px 24px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--surface-color);
 }
 
 #header h1 {
-    font-size: 18pt;
-    font-weight: bold;
-    margin: 4px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--accent-color);
+}
+
+#album-description {
+  padding: 12px 24px;
 }
 
 #album-description h2 {
-    font-size: 12pt;
-    font-weight: normal;
-    font-style: italic;
-    margin: 4px;
-    white-space: pre-wrap;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-style: normal;
+  font-weight: 400;
 }
 
-#download-all {
-    margin: auto 4px auto auto;
+#lightgallery {
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--thumb-gap);
+  justify-content: flex-start;
+}
+
+#lightgallery a {
+  margin: calc(var(--thumb-gap) / 2);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
+  background-color: var(--surface-color);
+}
+
+#lightgallery a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+#lightgallery img {
+  display: block;
+  width: auto;
+  max-height: 250px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 800px) {
+  #lightgallery {
+    padding: 4px;
+  }
+  #lightgallery a {
+    width: calc(33.33% - 8px);
+    aspect-ratio: 1 / 1;
+    margin: 4px;
+  }
+  #lightgallery img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 50%;
+  mask: url("/share/static/images/play.png") no-repeat center / 60%;
+  -webkit-mask: url("/share/static/images/play.png") no-repeat center / 60%;
+  background-color: white; /* Icon color */
+  opacity: 0.9;
+}
+
+#lightgallery a.thumb-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  min-height: 200px;
+  transform: translateY(0px);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+#lightgallery a.thumb-error::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("/share/static/images/immich-logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+
+  opacity: 0.1;
+}
+
+#lightgallery a.thumb-error:hover {
+  transform: translateY(-2px);
 }
 
 #loading-spinner {
-    text-align: center;
-    margin: 75px 0;
+  text-align: center;
+  margin: 75px 0;
 }
 .loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid #888;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
+  width: 48px;
+  height: 48px;
+  background-image: url("/share/static/images/immich-logo.svg");
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
+
+#download-all {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#download-all:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
