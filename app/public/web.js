@@ -210,7 +210,7 @@ class LGallery {
       title:
         `${metadata["make"] || ""}${metadata["model"] ? ` ${metadata["model"]}` : ""}`.trim(),
       subtitles: [
-        (metadata["exposureTime"] || "") + " s",
+        metadata["exposureTime"] ? metadata["exposureTime"] + " s" : "",
         metadata["iso"] ? "ISO " + metadata["iso"] : "",
       ].filter((v) => !!v),
     });
