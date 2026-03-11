@@ -1,6 +1,7 @@
 :root {
   --bg-color: #ffffff;
   --text-primary: #1f1f1f;
+  --text-secondary: #757575;
   --accent-color: #4250af;
   --surface-color: #f5f5f5;
   --svg-filters: brightness(0) saturate(100%) invert(29%) sepia(12%)
@@ -14,6 +15,7 @@
   :root {
     --bg-color: #111111;
     --text-primary: #e5e7eb;
+    --text-secondary: #9aa0a6;
     --accent-color: #accbfa;
     --surface-color: #202124;
     --svg-filters: brightness(0) saturate(100%) invert(88%) sepia(23%)
@@ -96,6 +98,110 @@ body {
 .lg-outer .lg-thumb-item.active,
 .lg-outer .lg-thumb-item:hover {
   border-color: var(--accent-color) !important;
+}
+
+/* Metadata Panel Styles */
+.lg-outer.lg-metadata-open {
+  width: calc(100% - 360px) !important;
+}
+
+#lg-metadata-panel {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 360px;
+  height: 100%;
+  background-color: var(--bg-color);
+  z-index: 1100;
+  transition: right 0.3s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  color: var(--text-primary);
+  font-family: "Google Sans", Roboto, system-ui, sans-serif;
+}
+
+#lg-metadata-panel.open {
+  right: 0;
+}
+
+#lg-toolbar-info img {
+  filter: invert(68%) sepia(0%) saturate(698%) hue-rotate(256deg)
+    brightness(90%) contrast(89%);
+}
+
+#lg-toolbar-info img:hover {
+  filter: invert(68%) sepia(0%) saturate(698%) hue-rotate(256deg)
+    brightness(160%) contrast(89%);
+}
+
+.metadata-header {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--surface-color);
+}
+
+.metadata-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.metadata-header button {
+  height: 24px;
+  width: 24px;
+}
+
+.metadata-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.metadata-section {
+  margin-bottom: 36px;
+}
+
+.metadata-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.metadata-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.metadata-label {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.metadata-subtitles {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  #lg-metadata-panel {
+    width: 100%;
+    right: -100%;
+  }
+  .lg-outer.lg-metadata-open {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 800px) {
