@@ -205,12 +205,14 @@ app.get(
  * If you don't want to see this, set showHomePage as false in your config.json:
  * https://github.com/alangrainger/immich-public-proxy?tab=readme-ov-file#immich-public-proxy-options
  */
-if (getConfigOption("ipp.showHomePage", true)) {
-  app.get(/^\/(|share)\/*$/, (_req, res) => {
+app.get(/^\/(|share)\/*$/, (_req, res) => {
+  if (getConfigOption("ipp.showHomePage", true)) {
     addResponseHeaders(res);
     res.render("home");
-  });
-}
+  } else {
+    respondToInvalidRequest(res, 404, "Invalid route " + _req.path);
+  }
+});
 
 /*
  * Send a 404 for all other routes
