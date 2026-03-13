@@ -3,14 +3,20 @@
 <head>
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% if (embed?.color) { %>
+        <meta name="theme-color" content="<%= embed.color %>">
+    <% } %>
     <%
-    // Add an og-image using the first image's thumbnail
-    if (items?.[0]?.previewUrl) {
+    let ogImage = embed?.cover || items?.[0]?.previewUrl;
+
+    if (ogImage) {
     %>
         <meta property="og:title" content="<%= title %>">
-        <meta property="og:image" content="<%- publicBaseUrl %><%- items[0].previewUrl %>">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:image" content="<%- publicBaseUrl %><%- ogImage %>">
         <meta name="twitter:title" content="<%= title %>">
-        <meta name="twitter:image" content="<%- publicBaseUrl %><%- items[0].previewUrl %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:image" content="<%- publicBaseUrl %><%- ogImage %>">
         <meta name="twitter:card" content="summary_large_image">
     <% } %>
     <link rel="icon" href="/share/static/favicon.ico" type="image/x-icon">

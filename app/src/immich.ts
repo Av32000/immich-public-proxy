@@ -219,6 +219,30 @@ class Immich {
             }
             // Replace the empty link.assets array with the array of assets from the album
             link.assets = album.assets;
+
+            // Handle metadata inside the album description
+            if (album.id && link.album?.description) {
+              const colorMatch =
+                link.album.description.match(/#ipp_color:(#\w+)/);
+              const coverMatch = link.album.description.match(
+                /#ipp_cover:([\w\.-]+)/,
+              );
+              if (colorMatch || coverMatch) {
+                link.embed = link.embed || {};
+                if (colorMatch) {
+                  link.embed.color = colorMatch[1];
+                  link.album.description = link.album.description
+                    .replace(colorMatch[0], "")
+                    .trim();
+                }
+                if (coverMatch) {
+                  link.embed.cover = coverMatch[1];
+                  link.album.description = link.album.description
+                    .replace(coverMatch[0], "")
+                    .trim();
+                }
+              }
+            }
           }
 
           link.password = password;

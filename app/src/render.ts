@@ -226,19 +226,38 @@ class Render {
       }),
     );
 
-    res.render("gallery", {
+    const renderData = {
       items,
       openItem,
       title: this.title(share),
       description: getConfigOption("ipp.showGalleryDescription", false)
         ? this.description(share)
         : "",
+      embed: share.embed,
       publicBaseUrl,
       path: "/share/" + share.key,
       showDownload: canDownload(share),
       showTitle: getConfigOption("ipp.showGalleryTitle", false),
       lgConfig: getConfigOption("lightGallery", {}),
-    });
+    };
+
+    // Replace cover filename with actual preview URL if specified
+    if (renderData.embed?.cover) {
+      const coverAsset = share.assets.find(
+        (asset) => asset.originalFileName === renderData.embed?.cover,
+      );
+      if (coverAsset) {
+        renderData.embed.cover = immich.photoUrl(
+          share.key,
+          coverAsset.id,
+          immich.getPreviewImageSize(coverAsset),
+        );
+      } else {
+        delete renderData.embed.cover;
+      }
+    }
+
+    res.render("gallery", renderData);
   }
 
   /**

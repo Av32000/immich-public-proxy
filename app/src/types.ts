@@ -70,6 +70,10 @@ export interface SharedLink {
   keyType: KeyType;
   type: string;
   description?: string;
+  embed: {
+    color?: string;
+    cover?: string;
+  };
   assets: Asset[];
   allowDownload?: boolean;
   password?: string;
