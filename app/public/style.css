@@ -88,12 +88,43 @@ body {
   z-index: 2;
 }
 
+#lightgallery a.loading {
+  position: relative;
+}
+
+#lightgallery a.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/share/static/images/immich-logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+  opacity: 0.15;
+  animation: rotation 2s linear infinite;
+  z-index: 1;
+}
+
 #lightgallery img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: opacity 0.3s ease;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+}
+
+#lightgallery img.loaded {
+  opacity: 1;
+}
+
+#lightgallery a.loading img {
+  opacity: 0;
 }
 
 .lg-outer .lg-thumb-item.active,
@@ -249,6 +280,7 @@ body {
   transform: translateY(0px);
   color: var(--text-primary);
   text-decoration: none;
+  position: relative;
 }
 
 #lightgallery a.thumb-error::before {
@@ -265,6 +297,7 @@ body {
   background-size: 50%;
 
   opacity: 0.1;
+  animation: none; /* Ensure it doesn't rotate if it was loading before */
 }
 
 #lightgallery a.thumb-error:hover {

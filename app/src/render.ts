@@ -213,7 +213,9 @@ class Render {
           downloadUrl ? ` data-download-url="${downloadUrl}"` : "",
           metadata ? ` data-exif='${JSON.stringify(metadata)}'` : "",
           description ? ` data-sub-html='<p>${description}</p>'` : "",
-          ` data-download="${this.getFilename(asset)}" data-slide-name="${asset.id}"><img alt="${description}" loading="lazy" src="${thumbnailUrl}" onerror="this.closest('a').classList.add('thumb-error')"/>`,
+          ` data-download="${this.getFilename(
+            asset,
+          )}" data-slide-name="${asset.id}" class="loading"><img alt="${description}" loading="lazy" src="${thumbnailUrl}" onload="this.classList.add('loaded'); this.closest('a').classList.remove('loading')" onerror="this.closest('a').classList.add('thumb-error'); this.closest('a').classList.remove('loading')"/>`,
           video ? '<div class="play-icon"></div>' : "",
           "</a>",
         ].join("");
