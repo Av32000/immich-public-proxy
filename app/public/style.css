@@ -67,18 +67,19 @@ body {
 }
 
 #lightgallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--thumb-gap);
   padding: var(--thumb-gap);
-  justify-content: flex-start;
 }
 
 #lightgallery a {
-  margin: calc(var(--thumb-gap) / 2);
+  margin: 0;
   border-radius: var(--border-radius);
   overflow: hidden;
   transition: var(--transition);
   background-color: var(--surface-color);
+  aspect-ratio: 1 / 1;
 }
 
 #lightgallery a:hover {
@@ -89,8 +90,8 @@ body {
 
 #lightgallery img {
   display: block;
-  width: auto;
-  max-height: 250px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: opacity 0.3s ease;
 }
@@ -206,12 +207,15 @@ body {
 
 @media (max-width: 800px) {
   #lightgallery {
-    padding: 4px;
+    padding: 0;
+    gap: 1px;
+    grid-template-columns: repeat(3, 1fr);
   }
   #lightgallery a {
-    width: calc(33.33% - 8px);
+    width: 100%;
     aspect-ratio: 1 / 1;
-    margin: 4px;
+    margin: 0;
+    border-radius: 0;
   }
   #lightgallery img {
     width: 100%;
